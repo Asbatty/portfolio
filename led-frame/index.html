@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LED Frame · Asbatty</title>
+  <meta name="description" content="A framed 64x32 RGB LED wall display on an ESP32, with stick-figure weather scenes and Home Assistant control.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Silkscreen&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="../">ASBATTY<span>_</span></a>
+      <nav><a href="../#projects">Projects</a><a href="https://github.com/Asbatty/led-frame">Source</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>LED <span class="acc">Frame</span></h1>
+      <p class="lead">A framed 64×32 RGB LED panel on my wall, driven by an ESP32. It shows the time, live weather
+        acted out by a little stick figure, messages and alerts, and it's controlled from Home Assistant or
+        a phone page on my Wi-Fi.</p>
+      <p style="margin-top:22px"><a class="btn" href="https://github.com/Asbatty/led-frame">View the source on GitHub</a></p>
+    </section>
+
+    <section>
+      <div class="two">
+        <div class="panel"><img src="img/clock.png" alt="Clock face: 4:49, partly cloudy icon, 64 degrees with a rain drop, date strip"></div>
+        <div>
+          <h2>The clock face</h2>
+          <p class="lead">Big amber time, an animated weather icon, the temperature, and a strip that alternates
+            the date with today's high and low. A blue drop blinks when rain is on the way.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>The weather, acted out</h2>
+      <p class="lead" style="margin-bottom:22px">Instead of an icon, the Weather screen has a stick figure living
+        through whatever's happening outside. Every scene is animated: rain splashes, waves roll, the wind tears
+        his hat off.</p>
+      <div class="gallery">
+        <figure><img src="img/weather-sunny.png" alt="Sunbathing in sunglasses" loading="lazy"><figcaption><b>Sunny</b>Sunbathing in shades with a drink</figcaption></figure>
+        <figure><img src="img/weather-rainy.png" alt="Holding an umbrella in the rain" loading="lazy"><figcaption><b>Rain</b>Under the umbrella while it splashes around him</figcaption></figure>
+        <figure><img src="img/weather-pouring.png" alt="Swimming in rising water" loading="lazy"><figcaption><b>Pouring</b>Swimming (or drowning) in the waves</figcaption></figure>
+        <figure><img src="img/weather-windy.png" alt="Clinging to a pole in the wind" loading="lazy"><figcaption><b>Windy</b>Clinging to a pole, flapping sideways</figcaption></figure>
+        <figure><img src="img/weather-lightning.png" alt="Hair on end as lightning strikes" loading="lazy"><figcaption><b>Thunderstorm</b>Hair on end as lightning strikes nearby</figcaption></figure>
+        <figure><img src="img/weather-snowy.png" alt="Throwing snowballs at a snowman" loading="lazy"><figcaption><b>Snow</b>A snowball fight with the snowman</figcaption></figure>
+        <figure><img src="img/weather-clear-night.png" alt="Asleep in bed under the moon" loading="lazy"><figcaption><b>Clear night</b>Asleep, Zzz drifting up under the moon</figcaption></figure>
+        <figure><img src="img/weather-partlycloudy.png" alt="Waving as a cloud passes the sun" loading="lazy"><figcaption><b>Partly cloudy</b>Waving as a cloud slides past the sun</figcaption></figure>
+        <figure><img src="img/weather-cloudy.png" alt="Standing under grey clouds" loading="lazy"><figcaption><b>Cloudy</b>Glum under drifting grey clouds</figcaption></figure>
+        <figure><img src="img/weather-fog.png" alt="Walking through fog" loading="lazy"><figcaption><b>Fog</b>Wandering through drifting fog</figcaption></figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Other screens</h2>
+      <div class="gallery">
+        <figure><img src="img/message.png" alt="Scrolling rainbow message" loading="lazy"><figcaption><b>Messages</b>Scrolling text sent from a phone or a Home Assistant automation</figcaption></figure>
+        <figure><img src="img/alert.png" alt="Rain alert with cloud icon" loading="lazy"><figcaption><b>Alerts</b>Pop-ups such as rain warnings interrupt, then hand back</figcaption></figure>
+        <figure><img src="img/art.png" alt="Colour wave art with a small clock" loading="lazy"><figcaption><b>Ambient art</b>Slow colour waves with a quiet clock in the corner</figcaption></figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>How it works</h2>
+      <div class="flow">Home Assistant ──MQTT──► Mosquitto broker ──► ESP32 firmware ──► 64×32 HUB75 panel
+                                                  ▲
+                    phone browser ──HTTP──────────┘   (matrix.local)</div>
+      <div class="facts" style="margin-top:18px">
+        <div class="fact"><b>Rendering</b><span>Every frame is drawn off-screen, then pushed to the panel in one go via DMA, so nothing tears or flickers.</span></div>
+        <div class="fact"><b>Pixel font and art</b><span>A custom 3×5 font and hand-built scenes keep everything readable at 64×32.</span></div>
+        <div class="fact"><b>Home Assistant</b><span>MQTT device discovery creates the light, mode, message, countdown and alert entities automatically.</span></div>
+        <div class="fact"><b>No-touch updates</b><span>Wi-Fi setup through a temporary hotspot, settings saved in flash, firmware updates over Wi-Fi.</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Hardware</h2>
+      <div class="facts">
+        <div class="fact"><b>Panel</b><span>Waveshare 64×32 P4 HUB75 RGB matrix (2,048 LEDs)</span></div>
+        <div class="fact"><b>Brain</b><span>ESP32-WROOM-32E DevKitC</span></div>
+        <div class="fact"><b>Power</b><span>5 V 5 A supply feeding the panel and the ESP32, brightness capped in firmware</span></div>
+        <div class="fact"><b>Wiring</b><span>16-wire HUB75 ribbon to the ESP32's GPIO pins</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>What I learned</h2>
+      <ul class="lessons">
+        <li><b>Ghosting was a clock-phase problem</b><span>With most of the panel lit, black pixels beside bright text glowed. Latch blanking and colour depth did nothing; this panel latches data on the other clock edge.</span></li>
+        <li><b>Black is invisible on LEDs</b><span>Sunglasses drawn in black just looked like a hole in his head. Detail on a dark display has to be drawn with light.</span></li>
+        <li><b>Very dim colours flicker</b><span>At low brightness the faintest colour levels shimmer, so the art palette snaps each channel to off or a safe minimum.</span></li>
+        <li><b>Strapping pins bite</b><span>A panel data line on GPIO 12 could stop the ESP32 from booting. Moving it to GPIO 33 fixed it.</span></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer><div class="wrap"><a href="../">← All projects</a> · Source: <a href="https://github.com/Asbatty/led-frame">github.com/Asbatty/led-frame</a></div></footer>
+</body>
+</html>
